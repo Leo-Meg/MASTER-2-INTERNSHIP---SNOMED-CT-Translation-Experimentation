@@ -186,5 +186,3 @@ If you use this pipeline, please cite:
 ```text
 Megret L., 2025. Few‑shot Translation of SNOMED CT with Large Language Models. Inria SED, Technical Report.
 ```
-
-Happy translating! 🎉
