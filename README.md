@@ -1,5 +1,10 @@
 # MASTER-2-INTERNSHIP---SNOMED-CT-Translation-Experimentation
 
+
+Here is the Drive link to read the PDF of my research paper **"Study of the combination of an LLM and a knowledge structure for the translation of SNOMED CT: Empirical analysis of the in-context learning approach with multiple examples"** in which I discuss in detail the work presented in this GiHub.
+
+https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=sharing
+
 # NRC‑traduction‑snomed‑LLM
 
 > **Few‑shot translation of SNOMED CT preferred terms (English → French / Spanish) with large language models**
