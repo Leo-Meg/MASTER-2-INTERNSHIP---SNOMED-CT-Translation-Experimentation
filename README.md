@@ -47,7 +47,8 @@ The experiment:
 
 *Only the key research scripts are listed above – notebooks and helper utils omitted for brevity.*
 
- ## 3 – Prerequisites ### 3.1 Datasets
+ ## 3 – Prerequisites 
+ ### 3.1 Datasets
 
 | What                                                                         | Where to put it                                                                                                      | Notes                               |
 | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
