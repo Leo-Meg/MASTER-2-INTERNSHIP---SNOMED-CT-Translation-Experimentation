@@ -19,8 +19,6 @@
      5‑d. [Step 3 – Example retrieval](#step3)
      5‑e. [Step 4 – Five‑shot generation](#step4)
 6. [Generated artefacts](#artefacts)
-7. [Troubleshooting & FAQ](#faq)
-8. [License & citation](#license)
 
  ## 1 – Project overview This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
 The experiment:
