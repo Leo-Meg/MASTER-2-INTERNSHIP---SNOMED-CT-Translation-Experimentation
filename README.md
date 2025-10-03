@@ -10,8 +10,7 @@ https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=shari
 > **Few‑shot translation of SNOMED CT preferred terms (English → French / Spanish) with large language models**
 
 
-
-## Table of contents
+## Table of contents
 
 1. [Project overview](#overview)
 2. [Folder layout](#layout)
@@ -25,7 +24,7 @@ https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=shari
      5‑e. [Step 4 – Five‑shot generation](#step4)
 6. [Generated artefacts](#artefacts)
 
- ## 1 – Project overview This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
+## 1 – Project overview This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
 The experiment:
 
 * extracts **French** and **Spanish** preferred terms (PT) from their respective National Extensions;
@@ -33,7 +32,7 @@ The experiment:
 * builds mixed graph/semantic **few‑shot prompts** (5 exemplars) for every strategy;
 * asks the model to translate new English PTs and logs the outputs for further evaluation.
 
- ## 2 – Folder layout
+ ## 2 – Folder layout
 
 ```
 ├── data/                     # auto‑created; all outputs land here
@@ -52,9 +51,9 @@ The experiment:
 
 *Only the key research scripts are listed above – notebooks and helper utils omitted for brevity.*
 
- ## 3 – Prerequisites 
+ ## 3 – Prerequisites 
  
- ### 3.1 Datasets
+ ### 3.1 Datasets
 
 | What                                                                         | Where to put it                                                                                                      | Notes                               |
 | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
@@ -63,7 +62,7 @@ The experiment:
 | **Spanish Extension 2024‑09** (Full + Snapshot folders)                      | `SnomedCT_SpanishRelease‑es_PRODUCTION_20240930T120000Z/`                                                            | required                            |
 | **default_example.csv** (hand‑crafted seed examples in FR)                   | project root                                                                                                         | optional – improves default prompts |
 
-### 3.2 Software – two Conda environments `node2vec` still relies on **NetworkX < 3.0** while `snomed_graph` needs **NetworkX ≥ 3.2**.  Mixing the two breaks both, therefore we keep them **separate**:
+### 3.2 Software – two Conda environments `node2vec` still relies on **NetworkX < 3.0** while `snomed_graph` needs **NetworkX ≥ 3.2**.  Mixing the two breaks both, therefore we keep them **separate**:
 
 | Environment              | Purpose                        | Main deps                                                                          |
 | ------------------------ | ------------------------------ | ---------------------------------------------------------------------------------- |
@@ -72,7 +71,7 @@ The experiment:
 
 Minimal recipes are provided in `envs/` (feel free to tweak CUDA versions).
 
- ## 4 – Installation (one‑off)
+ ## 4 – Installation (one‑off)
 
 ```bash
 # clone the repo
@@ -86,13 +85,13 @@ $ conda env create -f envs/env_snomed_trans_poc.yml
 
 On HPC clusters using **SLURM**, the two submission scripts already activate the right environment; on a local workstation just `conda activate` them manually before each step.
 
- ## 5 – Execution pipeline The whole run boils down to **two commands** – the first builds Node2Vec embeddings, the second drives the remainder of the experiment.
+ ## 5 – Execution pipeline The whole run boils down to **two commands** – the first builds Node2Vec embeddings, the second drives the remainder of the experiment.
 
 ```bash
-# STEP 1 – run once (≈ 24 h on 30 k nodes)
+# STEP 1 – run once (≈ 24 h on 30 k nodes)
 $ sbatch generate_node2vec.sh           # OR: conda activate env_node2vec && python generate_node2vec_embeddings.py
 
-# STEP 2 – full translation pipeline (GPU recommended)
+# STEP 2 – full translation pipeline (GPU recommended)
 $ sbatch snomed_pipeline_translations.sh             # default (complete run)
 $ sbatch snomed_pipeline_translations.sh test        # tiny dry‑run
 $ sbatch snomed_pipeline_translations.sh skip-embeddings  # reuse existing *.pkl.gz
@@ -100,7 +99,7 @@ $ sbatch snomed_pipeline_translations.sh skip-embeddings  # reuse existing *.pkl
 
 Below is the detailed flow for curious minds.
 
- ### Step 0 – Build the concept graph *(one‑off)* If you do **not** have `snomed_graph/full_concept_graph_snomed_ct_int_rf2_20241201.gml` yet:
+ ### Step 0 – Build the concept graph *(one‑off)* If you do **not** have `snomed_graph/full_concept_graph_snomed_ct_int_rf2_20241201.gml` yet:
 
 ```python
 from snomed_graph.snomed_graph import SnomedGraph
@@ -110,7 +109,7 @@ SnomedGraph.from_rf2_folder("/path/to/SnomedCT_International_RF2") \
 
 This step can be executed inside **env_snomed_trans_poc**.
 
- ### Step 1 – Node2Vec embeddings *(env_node2vec)*
+ ### Step 1 – Node2Vec embeddings *(env_node2vec)*
 
 | Script                                                 | Inputs                                  | Outputs                                        |
 | ------------------------------------------------------ | --------------------------------------- | ---------------------------------------------- |
@@ -118,7 +117,7 @@ This step can be executed inside **env_snomed_trans_poc**.
 
 Parameters (`walk_length=100`, `num_walks=20`, `dims=512`, *p* = 0.5, *q* = 2) match the notebook.
 
- ### Step 2 – Load translations & lexical embeddings *(env_snomed_trans_poc)*
+ ### Step 2 – Load translations & lexical embeddings *(env_snomed_trans_poc)*
 
 | Script                           | Inputs                                         | Outputs                                                                 |
 | -------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------- |
@@ -131,7 +130,7 @@ Flags:
 * `--skip-embeddings` → only refresh CSVs
 * `--force` → overwrite everything
 
- ### Step 3 – Retrieve in‑context examples *(env_snomed_trans_poc)*
+ ### Step 3 – Retrieve in‑context examples *(env_snomed_trans_poc)*
 
 | Script                 | Inputs                                             | Outputs                                         |
 | ---------------------- | -------------------------------------------------- | ----------------------------------------------- |
@@ -140,7 +139,7 @@ Flags:
 
 The file contains both *graph*‑based and *vector*‑based neighbours with scores and provenance.
 
- ### Step 4 – Generate five‑shot prompts & translations *(env_snomed_trans_poc, GPU 11 GB +)*
+ ### Step 4 – Generate five‑shot prompts & translations *(env_snomed_trans_poc, GPU 11 GB +)*
 
 | Script                                                        | Inputs                                                        | Outputs                                                                |
 | ------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -152,7 +151,7 @@ Useful options:
 * `--test` – limit to 20 concepts per method (quick sanity check)
 * `--batch-size`, `--max-new` – control Aya‑101 generation
 
- ## 6 – Generated artefacts
+ ## 6 – Generated artefacts
 
 ```
 data/
