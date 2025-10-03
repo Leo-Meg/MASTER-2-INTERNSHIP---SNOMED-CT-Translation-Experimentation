@@ -172,17 +172,8 @@ data/
 
 Each TSV contains: `sctid`, `preferred_term`, `aya_translation`, reference translation, prompt text, etc.
 
- ## 7 – Troubleshooting & FAQ
 
-* **ImportError: *****No module named ‘networkx.drawing’*** – you probably mixed the two environments.  Double‑check with `conda list | grep networkx`.
-* **GPU OOM during Aya‑101 generation** – use `--batch-size 8` or fall back to CPU (automatic) – it will just be slower.
-* **Need to regenerate only TF‑IDF embeddings** – `python load_translations_embedding.py --force --skip-embeddings` then delete `tfidf_ngram.pkl.gz` and rerun without `--skip-embeddings`.
-* **Where do results of the paper come from?** – see `ANALYSIS.ipynb` for replication of all metrics.
-
- ## 8 – License & citation Code is released under the **Apache 2.0** license.  SNOMED CT data is © SNOMED International and distributed under the SNOMED CT Affiliate License; you must hold a valid license to use the terminology files.
-
-If you use this pipeline, please cite:
 
 ```text
-Megret L., 2025. Few‑shot Translation of SNOMED CT with Large Language Models. Inria SED, Technical Report.
+Megret L., 2025. Few‑shot Translation of SNOMED CT with Large Language Models. Agence du Numérique en Santé & Unité de recherche HeKA U1346 (Inria, Inserm, Université Paris Cité)
 ```
