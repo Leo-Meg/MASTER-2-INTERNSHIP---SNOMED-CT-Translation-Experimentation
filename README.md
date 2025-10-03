@@ -5,7 +5,6 @@ Here is the Drive link to read the PDF of my master thesis and internship report
 
 https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=sharing
 
-# NRC‑traduction‑snomed‑LLM
 
 > **Few‑shot translation of SNOMED CT preferred terms (English → French / Spanish) with large language models**
 
@@ -17,12 +16,12 @@ https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=shari
 3. [Prerequisites](#prereq)
 4. [Installation](#install)
 5. [Execution pipeline](#pipeline)
-   5‑a. [Step 0 – build the graph](#step0)
-   5‑b. [Step 1 – Node2Vec embeddings](#step1)
-   5‑c. [Step 2 – Translation & lexical embeddings](#step2)
-   5‑d. [Step 3 – Example retrieval](#step3)
-   5‑e. [Step 4 – Five‑shot generation](#step4)
-7. [Generated artefacts](#artefacts)
+- [Step 0 – build the graph](#step0)
+- [Step 1 – Node2Vec embeddings](#step1)
+- [Step 2 – Translation & lexical embeddings](#step2)
+- [Step 3 – Example retrieval](#step3)
+- [Step 4 – Five‑shot generation](#step4)
+8. [Generated artefacts](#artefacts)
 
 ## 1 – Project overview This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
 The experiment:
