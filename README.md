@@ -23,6 +23,7 @@ https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=shari
 - [Step 4 – Five‑shot generation](#step4)
 8. [Generated artefacts](#artefacts)
 
+<a name="overview"></a>
 ## 1 – Project overview 
 
 This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
@@ -34,6 +35,7 @@ The experiment:
 * builds mixed graph/semantic **few‑shot prompts** (5 exemplars) for every strategy;
 * asks the model to translate new English PTs and logs the outputs for further evaluation.
 
+<a name="layout"></a>
  ## 2 – Folder layout
 
 ```
@@ -53,6 +55,7 @@ The experiment:
 
 *Only the key research scripts are listed above – notebooks and helper utils omitted for brevity.*
 
+<a name="prereq"></a>
  ## 3 – Prerequisites 
  
  ### 3.1 Datasets
@@ -73,7 +76,8 @@ The experiment:
 
 Minimal recipes are provided in `envs/` (feel free to tweak CUDA versions).
 
- ## 4 – Installation (one‑off)
+<a name="install"></a>
+ ## 4 – Installation
 
 ```bash
 # clone the repo
@@ -87,7 +91,10 @@ $ conda env create -f envs/env_snomed_trans_poc.yml
 
 On HPC clusters using **SLURM**, the two submission scripts already activate the right environment; on a local workstation just `conda activate` them manually before each step.
 
- ## 5 – Execution pipeline The whole run boils down to **two commands** – the first builds Node2Vec embeddings, the second drives the remainder of the experiment.
+<a name="pipeline"></a>
+ ## 5 – Execution pipeline 
+ 
+ The whole run boils down to **two commands** – the first builds Node2Vec embeddings, the second drives the remainder of the experiment.
 
 ```bash
 # STEP 1 – run once (≈ 24 h on 30 k nodes)
@@ -101,7 +108,9 @@ $ sbatch snomed_pipeline_translations.sh skip-embeddings  # reuse existing *.pkl
 
 Below is the detailed flow for curious minds.
 
- ### Step 0 – Build the concept graph *(one‑off)* If you do **not** have `snomed_graph/full_concept_graph_snomed_ct_int_rf2_20241201.gml` yet:
+ ### Step 0 – Build the concept graph 
+ 
+ If you do **not** have `snomed_graph/full_concept_graph_snomed_ct_int_rf2_20241201.gml` yet:
 
 ```python
 from snomed_graph.snomed_graph import SnomedGraph
@@ -153,6 +162,7 @@ Useful options:
 * `--test` – limit to 20 concepts per method (quick sanity check)
 * `--batch-size`, `--max-new` – control Aya‑101 generation
 
+<a name="artefacts"></a>
  ## 6 – Generated artefacts
 
 ```
