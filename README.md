@@ -108,6 +108,7 @@ $ sbatch snomed_pipeline_translations.sh skip-embeddings  # reuse existing *.pkl
 
 Below is the detailed flow for curious minds.
 
+<a name="step0"></a>
  ### Step 0 – Build the concept graph 
  
  If you do **not** have `snomed_graph/full_concept_graph_snomed_ct_int_rf2_20241201.gml` yet:
@@ -120,6 +121,7 @@ SnomedGraph.from_rf2_folder("/path/to/SnomedCT_International_RF2") \
 
 This step can be executed inside **env_snomed_trans_poc**.
 
+<a name="step1"></a>
  ### Step 1 – Node2Vec embeddings *(env_node2vec)*
 
 | Script                                                 | Inputs                                  | Outputs                                        |
@@ -128,6 +130,7 @@ This step can be executed inside **env_snomed_trans_poc**.
 
 Parameters (`walk_length=100`, `num_walks=20`, `dims=512`, *p* = 0.5, *q* = 2) match the notebook.
 
+<a name="step2"></a>
  ### Step 2 – Load translations & lexical embeddings *(env_snomed_trans_poc)*
 
 | Script                           | Inputs                                         | Outputs                                                                 |
@@ -141,6 +144,7 @@ Flags:
 * `--skip-embeddings` → only refresh CSVs
 * `--force` → overwrite everything
 
+<a name="step3"></a>
  ### Step 3 – Retrieve in‑context examples *(env_snomed_trans_poc)*
 
 | Script                 | Inputs                                             | Outputs                                         |
@@ -150,6 +154,7 @@ Flags:
 
 The file contains both *graph*‑based and *vector*‑based neighbours with scores and provenance.
 
+<a name="step4"></a>
  ### Step 4 – Generate five‑shot prompts & translations *(env_snomed_trans_poc, GPU 11 GB +)*
 
 | Script                                                        | Inputs                                                        | Outputs                                                                |
