@@ -23,7 +23,10 @@ https://drive.google.com/file/d/1I07BEdlnb28KJsSy678N0l73ES4TqJ3_/view?usp=shari
 - [Step 4 – Five‑shot generation](#step4)
 8. [Generated artefacts](#artefacts)
 
-## 1 – Project overview This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
+## 1 – Project overview 
+
+This repository contains a **reproducible research pipeline** that compares several example‑retrieval strategies for translating SNOMED CT concepts with an instruction‑tuned multilingual LLM (Aya‑101).
+
 The experiment:
 
 * extracts **French** and **Spanish** preferred terms (PT) from their respective National Extensions;
